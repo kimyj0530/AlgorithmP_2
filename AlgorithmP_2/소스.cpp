@@ -2,32 +2,32 @@
 #include "Windows.h"
 #include "stdlib.h"
 #include "time.h"
-#define SIZE 17
+#define SIZE 16
 
 double sec = 3;
 int ran_num[SIZE] = {};
+
 
 void timeBomb(double s, int number)
 {
     system("cls");
     if (s < 0) {
         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12);
-        printf("@ @@@@@@@@..@@ @@  @\n @@@..@@@@..@@@@@@  \n@@@@@@....  @@..@ @@\n......        ..@@@@\n@@..    %d¹ø  ....@@\n@@@@..        ..@@@@\n@@......      ..@@@\n@@@@@@  ..  @@..  @@\n  @@@@..@@..@@@@@@@@\n @@@  @@@@@@@@  @  @\n", number);
+        printf("@ @@@@@@@@..@@ @@  @\n @@@..@@@@..@@@@@@  \n@@@@@@....  @@..@ @@\n......        ..@@@@\n@@..    %dë²ˆ  ....@@\n@@@@..        ..@@@@\n@@......      ..@@@\n@@@@@@  ..  @@..  @@\n  @@@@..@@..@@@@@@@@\n @@@  @@@@@@@@  @  @\n", number);
         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
         return;
     }
-    printf("\n\n\n  ¦£¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¤\n  ¦¢\t  ");
+    printf("\n\n\n  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”\n  â”‚\t  ");
     if (s <= 0.5) SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4);
     else if (s <= 1) SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12);
     else if (s <= 2) SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 6);
     else SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 10);
-    printf("%.1lfÃÊ", s);
+    printf("%.1lfì´ˆ", s);
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
-    printf("\t      ¦¢\n  ¦¦¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¥");
+    printf("\t      â”‚\n  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜");
     Sleep(10);
     timeBomb(s - 0.1, number);
 }
-
 void cnt_sort() {
     int i, j, n = SIZE, k, temp;
     for (i = 0; i < n - 1; i++)
@@ -44,41 +44,29 @@ void cnt_sort() {
         ran_num[i] = ran_num[k];
         ran_num[k] = temp;
     }
-    //for (i = 0; i < n; i++)
-    //{
-        //printf("%d ", ran_num[i]);
-    //}
 };
 
 
 int main(void) {
     int x = 0, y, t, z = 0;
-
-    srand((unsigned)time(NULL)); //randÀÇ seed°ª ¼³Á¤
-
-    // ÇöÀç ½Ã°£¿¡ ´ëÇÑ Á¤º¸¸¦ ´ãÀº time.h Çì´õÆÄÀÏÀ» ÀÌ¿ëÇÏ¿© ¸Å½Ã°£¸¶´Ù ´Ù¸¥°ªÀ» ¹Þµµ·Ï ÇÏ¿³À½.
-
+    srand(time(NULL));
     for (y = 0; y < 100; y++) {
-
-        ran_num[rand() % SIZE]++; // ³­¼ö¸¦ ¹ß»ý½ÃÄÑ ÇØ´ç ¹è¿­¿¡ Ä«¿îÆ® ÇÔ
-
+        ran_num[rand() % SIZE]++;
     }
-
-    for (t = 0; t < SIZE; t++) {
-
-        printf("num[%d]   %d\n", t, ran_num[t]);
-
-        if (ran_num[t] > ran_num[x]) { // ¼øÂ÷Àû Å©±â ºñ±³
-
-            x = t;
-
+    int g[SIZE] = {};
+    for (int i = 0; i < SIZE; i++) {
+        g[i] = (rand() % SIZE)+1;
+        for (int j = 0; j < i; j++) {
+            if (g[i] == g[j]) {
+                i--;
+                break;
+            }
         }
     }
-    timeBomb(sec, x);
-
-    printf("°¡Àå¸¹ÀÌ »ý¼ºµÈ ¼ö´Â %dÀÌ°í %d¹ø »ý¼ºµÇ¾ú´Ù\n", x, ran_num[x]);
-    for (t = 0; t < SIZE-1; t++) {
-        printf("%d¹ø %d\n", t+1, ran_num[t+1]);
+    timeBomb(sec, g[0]);
+    cnt_sort();
+    printf("ê°€ìž¥ë§Žì´ ë‚˜ì˜¨ ë²ˆí˜¸ëŠ” %dë²ˆì´ê³  %dë²ˆ ìƒì„±ë˜ì—ˆë‹¤\n", g[0], ran_num[0]);
+    for (t = 0; t < SIZE; t++) {
+        printf("%dë²ˆ %d\n", g[t], ran_num[t]);
     }
     return 0;
-}
